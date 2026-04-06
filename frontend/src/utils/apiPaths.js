@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
-  ? `${import.meta.env.VITE_API_BASE_URL}/api`
+  ? `https://interview-prep-a1g6.onrender.com/api`
   : "http://localhost:9000/api";
 
 export const API_PATHS = {
