@@ -6,6 +6,7 @@ import QAItem from "../components/QAItems";
 import Navbar from "../components/Navbar";
 import { useTheme } from "../context/ThemeContext";
 import { ShiningText } from "../components/ui/shining-text";
+import toast from "react-hot-toast";
 
 const InterviewPrep = () => {
   const { id } = useParams();
@@ -26,6 +27,7 @@ const InterviewPrep = () => {
       await fetchQuestions();
     } catch (error) {
       console.error(error);
+      toast.error(error.response?.data?.error || "Failed to generate questions. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -48,8 +50,8 @@ const InterviewPrep = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto pt-10 sm:pt-12 px-4 pb-20">
         <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 p-6 sm:p-8 rounded-3xl border shadow-sm gap-4 transition-all duration-300 ${isDark
-            ? "bg-white/5 backdrop-blur-xl border-white/10 shadow-black/30"
-            : "bg-white border-slate-200 shadow-slate-100"
+          ? "bg-white/5 backdrop-blur-xl border-white/10 shadow-black/30"
+          : "bg-white border-slate-200 shadow-slate-100"
           }`}>
           <div>
             <h1 className={`text-3xl sm:text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${isDark ? "from-blue-400 to-indigo-400" : "from-blue-600 to-indigo-600"
@@ -63,8 +65,8 @@ const InterviewPrep = () => {
             onClick={generateQuestions}
             disabled={isLoading}
             className={`relative overflow-hidden px-6 sm:px-8 py-3.5 rounded-2xl text-white font-bold transition-all duration-300 whitespace-nowrap w-full sm:w-auto text-center ${isLoading
-                ? "bg-slate-600 cursor-not-allowed opacity-60"
-                : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.04] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] active:scale-95"
+              ? "bg-slate-600 cursor-not-allowed opacity-60"
+              : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.04] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] active:scale-95"
               }`}
           >
             <span className="relative flex items-center justify-center gap-2">

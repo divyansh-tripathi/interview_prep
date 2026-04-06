@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { useNavigate, Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useTheme } from "../context/ThemeContext";
 
 const Login = () => {
@@ -12,23 +13,29 @@ const Login = () => {
   const isDark = theme === "dark";
 
   const handleLogin = async () => {
+    const email = form.email.trim();
+    const password = form.password.trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return toast.error("Please enter a valid email address");
+    if (!password) return toast.error("Password cannot be empty");
+
     try {
       setLoading(true);
-      const res = await axios.post(API_PATHS.AUTH.LOGIN, form);
+      const res = await axios.post(API_PATHS.AUTH.LOGIN, { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userName", res.data.name);
       navigate("/dashboard");
     } catch (err) {
-      alert("Invalid email or password");
+      toast.error(err.response?.data?.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 overflow-hidden relative transition-colors duration-300 ${
-      isDark ? "bg-[#0a0e1a]" : "bg-slate-50"
-    }`}>
+    <div className={`min-h-screen flex items-center justify-center px-4 overflow-hidden relative transition-colors duration-300 ${isDark ? "bg-[#0a0e1a]" : "bg-slate-50"
+      }`}>
       {isDark && (
         <>
           <div className="absolute w-96 h-96 bg-blue-700 rounded-full blur-3xl opacity-20 -top-20 -left-20 pointer-events-none"></div>
@@ -36,11 +43,10 @@ const Login = () => {
         </>
       )}
 
-      <div className={`relative z-10 w-full max-w-md p-8 sm:p-10 rounded-3xl border shadow-2xl transition-all duration-300 ${
-        isDark
-          ? "bg-white/5 backdrop-blur-2xl border-white/10"
-          : "bg-white border-slate-200 shadow-slate-200"
-      }`}>
+      <div className={`relative z-10 w-full max-w-md p-8 sm:p-10 rounded-3xl border shadow-2xl transition-all duration-300 ${isDark
+        ? "bg-white/5 backdrop-blur-2xl border-white/10"
+        : "bg-white border-slate-200 shadow-slate-200"
+        }`}>
         <div className="text-center mb-8">
           <div className="inline-block text-4xl mb-3">👋</div>
           <h2 className={`text-3xl font-extrabold ${isDark ? "text-white" : "text-slate-900"}`}>Welcome Back</h2>
@@ -51,22 +57,20 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email address"
-            className={`w-full rounded-2xl p-4 transition-all focus:outline-none focus:ring-2 ${
-              isDark
-                ? "bg-white/10 border border-white/10 text-white placeholder-white/30 focus:border-blue-500 focus:ring-blue-500/30"
-                : "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:ring-blue-400/30"
-            }`}
+            className={`w-full rounded-2xl p-4 transition-all focus:outline-none focus:ring-2 ${isDark
+              ? "bg-white/10 border border-white/10 text-white placeholder-white/30 focus:border-blue-500 focus:ring-blue-500/30"
+              : "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:ring-blue-400/30"
+              }`}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
 
           <input
             type="password"
             placeholder="Password"
-            className={`w-full rounded-2xl p-4 transition-all focus:outline-none focus:ring-2 ${
-              isDark
-                ? "bg-white/10 border border-white/10 text-white placeholder-white/30 focus:border-blue-500 focus:ring-blue-500/30"
-                : "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:ring-blue-400/30"
-            }`}
+            className={`w-full rounded-2xl p-4 transition-all focus:outline-none focus:ring-2 ${isDark
+              ? "bg-white/10 border border-white/10 text-white placeholder-white/30 focus:border-blue-500 focus:ring-blue-500/30"
+              : "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:ring-blue-400/30"
+              }`}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
 

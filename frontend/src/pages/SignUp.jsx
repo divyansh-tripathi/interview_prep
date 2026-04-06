@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { API_PATHS } from "../utils/apiPaths";
 import axios from "../utils/axiosInstance";
 import { useTheme } from "../context/ThemeContext";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -12,22 +13,35 @@ const SignUp = () => {
   const isDark = theme === "dark";
 
   const handleSignup = async () => {
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const password = form.password.trim();
+
+    if (!name) return toast.error("Name is required");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return toast.error("Please enter a valid email address");
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return toast.error("Password must be at least 6 characters and contain letters and numbers");
+    }
+
     try {
       setLoading(true);
-      await axios.post(API_PATHS.AUTH.SIGNUP, form);
+      await axios.post(API_PATHS.AUTH.SIGNUP, { name, email, password });
       navigate("/login");
     } catch (error) {
       console.log(error.response);
-      alert("Signup failed");
+      toast.error(error.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 overflow-hidden relative transition-colors duration-300 ${
-      isDark ? "bg-[#0a0e1a]" : "bg-slate-50"
-    }`}>
+    <div className={`min-h-screen flex items-center justify-center px-4 overflow-hidden relative transition-colors duration-300 ${isDark ? "bg-[#0a0e1a]" : "bg-slate-50"
+      }`}>
       {isDark && (
         <>
           <div className="absolute w-96 h-96 bg-violet-700 rounded-full blur-3xl opacity-20 -top-20 -right-20 pointer-events-none"></div>
@@ -35,11 +49,10 @@ const SignUp = () => {
         </>
       )}
 
-      <div className={`relative z-10 w-full max-w-md p-8 sm:p-10 rounded-3xl border shadow-2xl transition-all duration-300 ${
-        isDark
-          ? "bg-white/5 backdrop-blur-2xl border-white/10"
-          : "bg-white border-slate-200 shadow-slate-200"
-      }`}>
+      <div className={`relative z-10 w-full max-w-md p-8 sm:p-10 rounded-3xl border shadow-2xl transition-all duration-300 ${isDark
+        ? "bg-white/5 backdrop-blur-2xl border-white/10"
+        : "bg-white border-slate-200 shadow-slate-200"
+        }`}>
         <div className="text-center mb-8">
           <div className="inline-block text-4xl mb-3">🚀</div>
           <h2 className={`text-3xl font-extrabold ${isDark ? "text-white" : "text-slate-900"}`}>Create Account</h2>
@@ -56,11 +69,10 @@ const SignUp = () => {
               key={field}
               type={type}
               placeholder={placeholder}
-              className={`w-full rounded-2xl p-4 transition-all focus:outline-none focus:ring-2 ${
-                isDark
-                  ? "bg-white/10 border border-white/10 text-white placeholder-white/30 focus:border-violet-500 focus:ring-violet-500/30"
-                  : "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-violet-400 focus:ring-violet-400/30"
-              }`}
+              className={`w-full rounded-2xl p-4 transition-all focus:outline-none focus:ring-2 ${isDark
+                ? "bg-white/10 border border-white/10 text-white placeholder-white/30 focus:border-violet-500 focus:ring-violet-500/30"
+                : "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-violet-400 focus:ring-violet-400/30"
+                }`}
               onChange={(e) => setForm({ ...form, [field]: e.target.value })}
             />
           ))}
