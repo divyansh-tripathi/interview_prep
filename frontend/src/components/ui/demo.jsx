@@ -14,7 +14,7 @@ export default function DemoOne() {
                         'blur-[30px]',
                     )}
                 />
-                <h1 className="font-mono text-4xl font-semibold">Dotted Surface</h1>
+                <h1 className="font-mono text-4xl font-semibold">HireSphere AI</h1>
             </div>
         </DottedSurface>
     );

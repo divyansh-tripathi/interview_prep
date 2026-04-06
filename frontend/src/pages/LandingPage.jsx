@@ -13,7 +13,7 @@ const LandingPage = () => {
   const isDark = theme === "dark";
 
   return (
-    <div className={`relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden transition-colors duration-300 ${isDark ? "bg-[#0a0e1a] text-white" : "bg-slate-50 text-slate-900"
+    <div className={`  relative min-h-screen flex flex-col justify-center items-center text-center px-4 p-5 overflow-hidden transition-colors duration-300 ${isDark ? "bg-[#0a0e1a] text-white" : "bg-slate-50 text-slate-900"
       }`}>
       <DottedSurface className="absolute inset-0 size-full z-0" />
       {isDark && (

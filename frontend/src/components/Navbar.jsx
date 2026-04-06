@@ -18,20 +18,19 @@ const Navbar = () => {
 
   return (
     <nav className={`sticky top-0 z-50 flex justify-between items-center px-4 sm:px-6 py-4 backdrop-blur-xl border-b shadow-md transition-colors duration-300 ${isDark
-        ? "bg-[#0a0e1a]/90 border-white/10 shadow-black/30"
-        : "bg-white/90 border-slate-200 shadow-slate-200/50"
+      ? "bg-[#0a0e1a]/90 border-white/10 shadow-black/30"
+      : "bg-white/90 border-slate-200 shadow-slate-200/50"
       }`}>
       <h1
         className="text-xl font-extrabold cursor-pointer bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500"
         onClick={() => navigate("/dashboard")}
       >
-        InterviewPrep AI
+        HireSphere AI
       </h1>
 
       <div className="hidden sm:flex gap-3 items-center">
-        <span className={`text-sm font-medium px-3 py-1.5 rounded-xl ${
-          isDark ? "text-white/50 bg-white/5" : "text-slate-500 bg-slate-100"
-        }`}>
+        <span className={`text-sm font-medium px-3 py-1.5 rounded-xl ${isDark ? "text-white/50 bg-white/5" : "text-slate-500 bg-slate-100"
+          }`}>
           👋 Welcome, <span className={`font-bold ${isDark ? "text-white/80" : "text-slate-800"}`}>{userName}</span>
         </span>
         <button

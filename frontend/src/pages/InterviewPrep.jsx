@@ -5,6 +5,7 @@ import { API_PATHS } from "../utils/apiPaths";
 import QAItem from "../components/QAItems";
 import Navbar from "../components/Navbar";
 import { useTheme } from "../context/ThemeContext";
+import { ShiningText } from "../components/ui/shining-text";
 
 const InterviewPrep = () => {
   const { id } = useParams();
@@ -46,15 +47,13 @@ const InterviewPrep = () => {
       )}
 
       <div className="relative z-10 max-w-4xl mx-auto pt-10 sm:pt-12 px-4 pb-20">
-        <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 p-6 sm:p-8 rounded-3xl border shadow-sm gap-4 transition-all duration-300 ${
-          isDark
+        <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 p-6 sm:p-8 rounded-3xl border shadow-sm gap-4 transition-all duration-300 ${isDark
             ? "bg-white/5 backdrop-blur-xl border-white/10 shadow-black/30"
             : "bg-white border-slate-200 shadow-slate-100"
-        }`}>
+          }`}>
           <div>
-            <h1 className={`text-3xl sm:text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${
-              isDark ? "from-blue-400 to-indigo-400" : "from-blue-600 to-indigo-600"
-            }`}>
+            <h1 className={`text-3xl sm:text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${isDark ? "from-blue-400 to-indigo-400" : "from-blue-600 to-indigo-600"
+              }`}>
               Interview Questions
             </h1>
             <p className={`mt-1 text-sm ${isDark ? "text-white/30" : "text-slate-500"}`}>Click a question to reveal the answer</p>
@@ -63,11 +62,10 @@ const InterviewPrep = () => {
           <button
             onClick={generateQuestions}
             disabled={isLoading}
-            className={`relative overflow-hidden px-6 sm:px-8 py-3.5 rounded-2xl text-white font-bold transition-all duration-300 whitespace-nowrap w-full sm:w-auto text-center ${
-              isLoading
+            className={`relative overflow-hidden px-6 sm:px-8 py-3.5 rounded-2xl text-white font-bold transition-all duration-300 whitespace-nowrap w-full sm:w-auto text-center ${isLoading
                 ? "bg-slate-600 cursor-not-allowed opacity-60"
                 : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.04] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] active:scale-95"
-            }`}
+              }`}
           >
             <span className="relative flex items-center justify-center gap-2">
               {isLoading ? (
@@ -84,20 +82,23 @@ const InterviewPrep = () => {
         </div>
 
         {isLoading ? (
-          <div className="space-y-5 animate-pulse">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className={`rounded-3xl p-7 flex flex-col gap-4 border ${
-                isDark ? "bg-white/5 border-white/10" : "bg-white border-slate-200"
-              }`}>
-                <div className={`h-6 rounded-xl w-3/4 ${isDark ? "bg-white/10" : "bg-slate-200"}`}></div>
-                <div className={`h-4 rounded-xl w-1/2 ${isDark ? "bg-white/5" : "bg-slate-100"}`}></div>
-              </div>
-            ))}
+          <div className="space-y-5">
+            <div className="flex justify-center items-center py-4">
+              <ShiningText text="HextaAI is thinking..." />
+            </div>
+            <div className="space-y-5 animate-pulse">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className={`rounded-3xl p-7 flex flex-col gap-4 border ${isDark ? "bg-white/5 border-white/10" : "bg-white border-slate-200"
+                  }`}>
+                  <div className={`h-6 rounded-xl w-3/4 ${isDark ? "bg-white/10" : "bg-slate-200"}`}></div>
+                  <div className={`h-4 rounded-xl w-1/2 ${isDark ? "bg-white/5" : "bg-slate-100"}`}></div>
+                </div>
+              ))}
+            </div>
           </div>
         ) : questions.length === 0 ? (
-          <div className={`text-center py-24 rounded-3xl border border-dashed ${
-            isDark ? "bg-white/5 border-white/10" : "bg-slate-100/60 border-slate-300"
-          }`}>
+          <div className={`text-center py-24 rounded-3xl border border-dashed ${isDark ? "bg-white/5 border-white/10" : "bg-slate-100/60 border-slate-300"
+            }`}>
             <span className="text-5xl block mb-4">🚀</span>
             <p className={`text-xl font-medium ${isDark ? "text-white/60" : "text-slate-600"}`}>No questions generated yet.</p>
             <p className={`mt-2 text-sm ${isDark ? "text-white/30" : "text-slate-400"}`}>Click generate to start your preparation.</p>
