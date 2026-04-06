@@ -1,20 +1,15 @@
+import User from "../models/user-model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user-model.js";
 
-// Generate JWT Token
 const generateToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+  let token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  return token;
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, profileImageUrl } = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res
@@ -35,14 +30,12 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      profileImageUrl: profileImageUrl || null,
     });
 
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      profileImageUrl: user.profileImageUrl,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -50,9 +43,6 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -64,7 +54,6 @@ export const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        profileImageUrl: user.profileImageUrl,
         token: generateToken(user._id),
       });
     } else {

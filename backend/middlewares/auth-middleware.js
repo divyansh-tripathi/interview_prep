@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user-model.js";
 
-// Middleware to protect routes
 export const protect = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
@@ -11,7 +10,7 @@ export const protect = async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id).select("-password");
+      req.user = await User.findById(decoded.userId).select("-password");
 
       next();
     } else {
