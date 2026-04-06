@@ -9,7 +9,7 @@ export const API_PATHS = {
   SESSION: {
     CREATE: `${BASE_URL}/sessions/create`,
     GET_ALL: `${BASE_URL}/sessions/my-sessions`,
-    GET_ONE: `${BASE_URL}/sessions`, // usage: GET_ONE/:id
+    GET_ONE: `${BASE_URL}/sessions`,
   },
   AI: {
     GENERATE_QUESTIONS: `${BASE_URL}/ai/generate-questions`,
